@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <string.h>
+
+int sum_array(int* array_ptr, int n){
+    int sum = 0;
+    for(int i = 0; i < n; ++i){
+        sum += *(array_ptr + i);
+    }
+    return sum;
+}
+
+int find_max(int* array_ptr, int n){
+    int max = -1;
+    for(int i = 0; i < n; ++i){
+        if(*(array_ptr + i) > max){
+            max = *(array_ptr + i);
+        }
+    }
+    return max;
+}
+
+void reverse_array(int *array_ptr, int n){
+    int *left_ptr = array_ptr;
+    int *right_ptr = array_ptr + (n - 1);
+
+    while (left_ptr < right_ptr){
+        int tmp = *left_ptr;
+        *left_ptr = *right_ptr;
+        *right_ptr = tmp;
+
+        left_ptr++;
+        right_ptr--;
+    }
+}
+
+int count_occurrences(int *array_ptr, int n, int value){
+    int count = 0;
+    for(int i = 0; i < n; ++i){
+        if(*(array_ptr + i) == value){
+            count++;
+        }
+    }
+    return count;
+}
+
+void print_array(int *array_ptr, int n){
+    printf("[");
+    for(int i = 0; i < n - 1; ++i){
+        printf("%zu, ", *(array_ptr + i));
+    }
+    printf("%zu]", *(array_ptr + (n - 1)));
+}
+
+int main(void) {
+    char mode[64] = "";
+    if (scanf("%63s", mode) != 1) {
+        mode[0] = '\0';
+    }
+    (void)mode;
+
+    int fixed_array[8] = {3, 1, 4, 1, 5, 9, 2, 6};
+    int length = sizeof(fixed_array) / sizeof(fixed_array[0]);
+
+    if (strcmp(mode, "sum") == 0)
+    {
+        printf("Original array: ");
+        print_array(fixed_array, length);
+        printf("\n");
+
+        printf("Sum: %zu", sum_array(fixed_array, length));
+    }
+    else if (strcmp(mode, "max") == 0)
+    {
+        printf("Max: %zu", find_max(fixed_array, length));
+    }
+    else if (strcmp(mode, "reverse") == 0)
+    {
+        reverse_array(fixed_array, length);
+        
+        printf("Reversed array: ");
+        print_array(fixed_array, length);
+        printf("\n");
+    }
+    else if (strcmp(mode, "count") == 0)
+    {
+        printf("Count of 1s: %zu\n", count_occurrences(fixed_array, length, 1));
+    }
+    else
+    {
+        printf("Original array: ");
+        print_array(fixed_array, length);
+        printf("\n");
+
+        printf("Sum: %zu", sum_array(fixed_array, length));
+        printf("Max: %zu", find_max(fixed_array, length));
+
+        reverse_array(fixed_array, length);
+        
+        printf("Reversed array:  ");
+        print_array(fixed_array, length);
+        printf("\n");
+
+        printf("Count of 1s: %zu\n", count_occurrences(fixed_array, length, 1));
+    }
+
+    return 0;
+}
